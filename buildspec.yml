@@ -1,0 +1,35 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      docker: 19
+  pre_build:
+    commands:
+      - echo Logging in to Amazon ECR...
+      - echo ${DOCKER_PASS} | docker login --username ${DOCKER_USER} --password-stdin
+      - $(aws ecr get-login --region $region --no-include-email)
+      - REPOSITORY_URI_API=888507318922.dkr.ecr.us-west-2.amazonaws.com/sample-ecs-app-web-app
+      - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7) 
+      - IMAGE_TAG=${COMMIT_HASH:=latest}
+  build:
+    commands:
+      - echo Build started on `date`
+      - echo Building the Docker images...
+      - docker build -t sample-app -f  .
+      - docker tag sample-app $REPOSITORY_URI_API:$IMAGE_TAG
+      - docker tag sample-app $REPOSITORY_URI_API:latest
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      - echo Pushing the Docker images...
+      - docker push $REPOSITORY_URI_API:$IMAGE_TAG
+      - docker push $REPOSITORY_URI_API:latest
+      - echo Writing image definitions file...
+      - printf '[{"name":"sample-ecs-app-web-family","imageUri":"%s"}]' $REPOSITORY_URI_API:latest > taskdefinition.json
+      - echo `pwd`
+      - echo `ls -alh`
+      - echo `cat taskdefinition.json`
+artifacts:
+    files: 
+      - taskdefinition.json
