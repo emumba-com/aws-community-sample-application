@@ -16,7 +16,7 @@ phases:
     commands:
       - echo Build started on `date`
       - echo Building the Docker images...
-      - docker build -t sample-app -f  .
+      - docker build -t sample-app .
       - docker tag sample-app $REPOSITORY_URI_API:$IMAGE_TAG
       - docker tag sample-app $REPOSITORY_URI_API:latest
   post_build:
