@@ -1,0 +1,29 @@
+##############
+### Build ####
+##############
+FROM node:alpine as build
+
+WORKDIR /base
+COPY package.json tsconfig.json yarn.lock .env .pnp.cjs .yarnrc.yml ./
+COPY packages ./packages
+COPY .yarn ./.yarn
+
+RUN yarn && yarn build
+
+
+################
+## Production ##
+################
+FROM node:alpine
+
+WORKDIR /base
+
+COPY --from=build /base/package.json /base/yarn.lock /base/.env /base/.pnp.cjs /base/.yarnrc.yml ./
+COPY --from=build /base/.yarn ./.yarn
+COPY --from=build /base/packages/server ./packages/server
+COPY --from=build /base/packages/hub ./packages/hub
+COPY --from=build /base/packages/common ./packages/common
+
+WORKDIR /base/packages/server
+
+CMD ["yarn", "start"]
