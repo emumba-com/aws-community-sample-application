@@ -8,6 +8,7 @@ phases:
     commands:
       - echo Logging in to Amazon ECR...
       - echo ${DOCKER_PASS} | docker login --username ${DOCKER_USER} --password-stdin
+      - region=us-west-2
       - $(aws ecr get-login --region $region --no-include-email)
       - TASK_DEFINITION_FILE=taskdefinition_server.json
       - REPOSITORY_URI_API=888507318922.dkr.ecr.us-west-2.amazonaws.com/aws-community-server
