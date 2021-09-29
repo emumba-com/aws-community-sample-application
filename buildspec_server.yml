@@ -11,7 +11,7 @@ phases:
       - region=us-west-2
       - $(aws ecr get-login --region $region --no-include-email)
       - TASK_DEFINITION_FILE=taskdefinition_server.json
-      - REPOSITORY_URI_API=888507318922.dkr.ecr.us-west-2.amazonaws.com/aws-community-server
+      - REPOSITORY_URI_API=888507318922.dkr.ecr.us-west-2.amazonaws.com/sample-ecs-app-api-app
       - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7) 
       - IMAGE_TAG=${COMMIT_HASH:=latest}
   build:
