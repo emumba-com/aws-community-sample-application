@@ -83,7 +83,10 @@ export default defineConfig(({ command }) => {
             brotliSize: brotli,
             chunkSizeWarningLimit: 4e3
         },
-        server: { port: 9000 },
+        server: { 
+            port: 9000,
+            cors: true 
+        },
         define: { 'window.config': env }
     };
 });
