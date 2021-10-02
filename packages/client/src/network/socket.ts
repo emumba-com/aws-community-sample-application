@@ -47,7 +47,7 @@ export default class Socket {
     public connect(): void {
         this.getServer((result) => {
             let { host, port } = result || this.config,
-                url = this.config.ssl ? `wss://${host}` : `ws://${host}:${port}`;
+                url = this.config.ssl ? `wss://${host}` : `ws://${host}`; //:${port}`;
 
             this.connection = io(url, {
                 forceNew: true,
