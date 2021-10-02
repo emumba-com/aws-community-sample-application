@@ -84,8 +84,8 @@ export default defineConfig(({ command }) => {
             chunkSizeWarningLimit: 4e3
         },
         server: { 
-            port: 9000 //,
-            //cors: true 
+            port: 9000,
+            cors: true 
         },
         define: { 'window.config': env }
     };
