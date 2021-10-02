@@ -28,7 +28,7 @@ phases:
       - docker push $REPOSITORY_URI_API:$IMAGE_TAG
       - docker push $REPOSITORY_URI_API:latest
       - echo Writing image definitions file...
-      - printf '[{"name":"aws-community-server","imageUri":"%s"}]' $REPOSITORY_URI_API:latest > $TASK_DEFINITION_FILE
+      - printf '[{"name":"aws-community-server","imageUri":"%s"}]' $REPOSITORY_URI_API:$IMAGE_TAG > $TASK_DEFINITION_FILE
       - echo `pwd`
       - echo `ls -alh`
       - echo `cat $TASK_DEFINITION_FILE`

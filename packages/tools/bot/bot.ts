@@ -43,7 +43,7 @@ export default class Bot {
     }
 
     private connect(): void {
-        let connection = io('ws://api-aws-community.emumbadevops.com', {
+        let connection = io('ws://127.0.0.1:9001', {
             forceNew: true,
             reconnection: false
         });
