@@ -256,7 +256,7 @@ export default class Player extends Character {
         this.level = Formulas.expToLevel(this.experience);
         this.nextExperience = Formulas.nextExp(this.experience);
         this.prevExperience = Formulas.prevExp(this.experience);
-        this.playerHitPoints = new HitPoints(data.hitPoints, Formulas.getMaxHitPoints(this.level));
+        this.playerHitPoints = new HitPoints(1000, 1000);
         this.mana = new Mana(data.mana, Formulas.getMaxMana(this.level));
 
         if (data.invisibleIds)
